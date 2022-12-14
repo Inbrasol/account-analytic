@@ -10,11 +10,10 @@ class PurchaseOrderLine(models.Model):
     def _prepare_purchase_order_line_from_procurement(
         self, product_id, product_qty, product_uom, company_id, values, po
     ):
-        res = super()._prepare_purchase_order_line_from_procurement(
+        res = super(
+            PurchaseOrderLine, self
+        )._prepare_purchase_order_line_from_procurement(
             product_id, product_qty, product_uom, company_id, values, po
         )
-        if "account_analytic_id" in values:
-            res.update(
-                {"account_analytic_id": values.get("account_analytic_id", False)}
-            )
+        res["account_analytic_id"] = values.get("account_analytic_id", False)
         return res
